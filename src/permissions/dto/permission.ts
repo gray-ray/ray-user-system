@@ -9,6 +9,9 @@ export class CreatePermissionDto {
 
   @ApiProperty()
   description: string;
+
+  @ApiProperty()
+  roleIds: number[];
 }
 
 export class SearchPermissionDto extends PartialType(CreatePermissionDto) {

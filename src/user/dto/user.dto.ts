@@ -18,6 +18,9 @@ export class CreateUserDto {
   @ApiProperty()
   @IsNotEmpty()
   display_name: string;
+
+  @ApiProperty()
+  appIds: number[];
 }
 
 export class SearchUserDto extends PartialType(CreateUserDto) {
@@ -33,4 +36,12 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsNotEmpty()
   @IsNumber()
   user_id: number;
+}
+
+export class UserResponse {
+  user_id: number;
+  username: string;
+  email: string;
+  display_name: string;
+  appIds: number[];
 }

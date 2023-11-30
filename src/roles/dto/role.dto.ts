@@ -9,6 +9,12 @@ export class CreateRoleDto {
 
   @ApiProperty()
   description: string;
+
+  @ApiProperty()
+  permissionIds: number[];
+
+  @ApiProperty()
+  appIds: number[];
 }
 
 export class SearchRoleDto extends PartialType(CreateRoleDto) {
@@ -24,4 +30,12 @@ export class UpdateRoleDto extends PartialType(CreateRoleDto) {
   @IsNotEmpty()
   @IsNumber()
   role_id: number;
+}
+
+export class RoleResponse {
+  role_id: number;
+  name: string;
+  description: string;
+  permissionIds: number[];
+  appIds: number[];
 }

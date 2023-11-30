@@ -9,6 +9,12 @@ export class CreateApplicationDto {
 
   @ApiProperty()
   description: string;
+
+  @ApiProperty()
+  roleIds: number[];
+
+  @ApiProperty()
+  userIds: number[];
 }
 
 export class SearchApplicationDto extends PartialType(CreateApplicationDto) {
@@ -24,4 +30,12 @@ export class UpdateApplicationDto extends PartialType(CreateApplicationDto) {
   @IsNotEmpty()
   @IsNumber()
   app_id: number;
+}
+
+export class AppResponse {
+  app_id: number;
+  name: string;
+  description: string;
+  roleIds: number[];
+  userIds: number[];
 }

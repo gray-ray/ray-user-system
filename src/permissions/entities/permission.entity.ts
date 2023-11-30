@@ -13,6 +13,6 @@ export default class Permission {
   @Column()
   description: string;
 
-  // @ManyToMany(() => Role, (role) => role?.permissions)
-  // roles: Role[];
+  @ManyToMany(() => Role, (role) => role?.permissions)
+  roles: Role[];
 }
