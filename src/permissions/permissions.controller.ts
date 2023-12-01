@@ -6,6 +6,8 @@ import {
   SearchPermissionDto,
 } from './dto/permission';
 
+
+import { IsNotEmpty} from 'class-validator';
 @Controller('permission')
 export class PermissionsController {
   constructor(private readonly permissionsService: PermissionsService) {}
@@ -30,13 +32,15 @@ export class PermissionsController {
     return this.permissionsService.update(updatePermissionDto);
   }
 
-  @Post('detail')
-  findOne(@Body('id') id: string) {
+  @Get('detail')
+  @IsNotEmpty()
+  findOne(@Query('id') id: string) {
     console.log(id);
     return this.permissionsService.findOne(+id);
   }
 
   @Get('remove')
+  @IsNotEmpty()
   remove(@Query('id') id: string) {
     return this.permissionsService.remove(+id);
   }

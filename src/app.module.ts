@@ -1,4 +1,4 @@
-import { Module, ValidationPipe } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
@@ -9,7 +9,9 @@ import { PermissionsModule } from './permissions/permissions.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 // import { ConfigModule, ConfigService } from '@nestjs/config';
 
-import { APP_PIPE } from '@nestjs/core';
+import { APP_PIPE, APP_INTERCEPTOR } from '@nestjs/core';
+import { ValidationPipe } from '../core/validate.pipe';
+import { ResponseInterceptor } from '../core/response.interceptor';
 
 @Module({
   imports: [
@@ -37,9 +39,12 @@ import { APP_PIPE } from '@nestjs/core';
     PermissionsModule,
   ],
   controllers: [AppController],
-  providers: [AppService,{
+  providers: [AppService, {
     provide: APP_PIPE,
     useClass: ValidationPipe
-  }],
+  }, {
+      provide: APP_INTERCEPTOR,
+      useClass: ResponseInterceptor
+    }],
 })
-export class AppModule {}
+export class AppModule { }

@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, UpdateUserDto, SearchUserDto } from './dto/user.dto';
 
-import { IsNotEmpty, IsNumber, IsOptional,IsArray , IsEmail} from 'class-validator';
+import { IsNotEmpty} from 'class-validator';
 
 @Controller('user')
 export class UserController {
@@ -28,9 +28,9 @@ export class UserController {
     return this.userService.update(updateUserDto);
   }
 
-  @Post('detail')
+  @Get('detail')
   @IsNotEmpty()
-  findOne(@Body('id') id: number) {
+  findOne(@Query('id') id: string) {
     return this.userService.findOne(+id);
   }
 

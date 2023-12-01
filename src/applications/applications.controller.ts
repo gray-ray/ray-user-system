@@ -7,6 +7,8 @@ import {
   SearchApplicationDto,
 } from './dto/application.dto';
 
+import { IsNotEmpty} from 'class-validator';
+
 @Controller('application')
 export class ApplicationsController {
   constructor(private readonly applicationsService: ApplicationsService) {}
@@ -31,13 +33,14 @@ export class ApplicationsController {
     return this.applicationsService.update(updateUserDto);
   }
 
-  @Post('detail')
-  findOne(@Body('id') id: string) {
-    console.log(id);
+  @Get('detail')
+  @IsNotEmpty()
+  findOne(@Query('id') id: string) {
     return this.applicationsService.findOne(+id);
   }
 
   @Get('remove')
+  @IsNotEmpty()
   remove(@Query('id') id: string) {
     return this.applicationsService.remove(+id);
   }

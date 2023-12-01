@@ -2,6 +2,8 @@ import { Controller, Get, Post, Body, Query } from '@nestjs/common';
 import { RolesService } from './roles.service';
 import { CreateRoleDto, UpdateRoleDto, SearchRoleDto } from './dto/role.dto';
 
+import { IsNotEmpty} from 'class-validator';
+
 @Controller('role')
 export class RolesController {
   constructor(private readonly rolesService: RolesService) {}
@@ -26,13 +28,14 @@ export class RolesController {
     return this.rolesService.update(updateUserDto);
   }
 
-  @Post('detail')
-  findOne(@Body('id') id: string) {
-    console.log(id);
+  @Get('detail')
+  @IsNotEmpty()
+  findOne(@Query('id') id: string) {
     return this.rolesService.findOne(+id);
   }
 
   @Get('remove')
+  @IsNotEmpty()
   remove(@Query('id') id: string) {
     return this.rolesService.remove(+id);
   }

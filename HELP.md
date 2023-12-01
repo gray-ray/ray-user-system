@@ -7,6 +7,9 @@ NOTE: service  module 都需要配置
 
 ###  [class-validator 校验器的使用](https://github.com/typestack/class-validator)
 
+### [全局管道类验证的方式](https://docs.nestjs.cn/9/pipes?id=%e7%b1%bb%e9%aa%8c%e8%af%81%e5%99%a8)
+1. main.ts
+2. app.module.ts注入
 
 ### 待办项
 
