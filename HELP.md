@@ -4,6 +4,10 @@
 forwardRef 相互依赖问题解决
 NOTE: service  module 都需要配置
 
+
+###  [class-validator 校验器的使用](https://github.com/typestack/class-validator)
+
+
 ### 待办项
 
 - 接入 swagger ui

@@ -2,6 +2,8 @@ import { Controller, Get, Post, Body, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, UpdateUserDto, SearchUserDto } from './dto/user.dto';
 
+import { IsNotEmpty, IsNumber, IsOptional,IsArray , IsEmail} from 'class-validator';
+
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -27,12 +29,13 @@ export class UserController {
   }
 
   @Post('detail')
-  findOne(@Body('id') id: string) {
-    console.log(id);
+  @IsNotEmpty()
+  findOne(@Body('id') id: number) {
     return this.userService.findOne(+id);
   }
 
   @Get('remove')
+  @IsNotEmpty()
   remove(@Query('id') id: string) {
     return this.userService.remove(+id);
   }
