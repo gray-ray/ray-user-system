@@ -12,8 +12,9 @@ NOTE: service  module 都需要配置
 2. app.module.ts注入
 
 ### 待办项
-
+- 用户、应用、角色、权限 CRUD
 - 接入 swagger ui
-- 全局过滤器
-- restful
+- 全局返回过滤器 返回数据结构统一
+- 全局类验证 输入字段校验
 - 登录鉴权
+- 权限认证

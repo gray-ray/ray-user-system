@@ -1,4 +1,10 @@
-import { Injectable, HttpException, HttpStatus ,Inject, forwardRef } from '@nestjs/common';
+import {
+  Injectable,
+  HttpException,
+  HttpStatus,
+  Inject,
+  forwardRef,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In } from 'typeorm';
 import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
@@ -116,5 +122,15 @@ export class UserService {
 
   async findByIds(ids: number[]) {
     return this.userRepository.findBy({ user_id: In(ids) });
+  }
+
+  async findByName(username: string) {
+    const user = await this.userRepository
+      .createQueryBuilder('users')
+      // password 返回返回column隐藏时可以通过 addSelect  添加查询
+      .addSelect('users.password')
+      .where('users.username = :username', { username })
+      .getOne();
+    return user;
   }
 }

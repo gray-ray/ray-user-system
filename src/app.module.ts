@@ -12,6 +12,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_PIPE, APP_INTERCEPTOR } from '@nestjs/core';
 import { ValidationPipe } from '../core/validate.pipe';
 import { ResponseInterceptor } from '../core/response.interceptor';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { ResponseInterceptor } from '../core/response.interceptor';
     ApplicationsModule,
     RolesModule,
     PermissionsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService, {
