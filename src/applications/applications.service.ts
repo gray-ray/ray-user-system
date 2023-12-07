@@ -22,7 +22,8 @@ export class ApplicationsService {
   constructor(
     @InjectRepository(Application)
     private readonly applicationRepository: Repository<Application>,
-    private readonly rolesService: RolesService,
+    @Inject(forwardRef(() => RolesService))
+    private rolesService: RolesService,
     @Inject(forwardRef(() => UserService))
     private userService: UserService,
   ) {}

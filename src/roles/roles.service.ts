@@ -5,8 +5,10 @@ import Role from './entities/role.entity';
 import { CreateRoleDto, UpdateRoleDto } from './dto/role.dto';
 import { PermissionsService } from 'src/permissions/permissions.service';
 import { ApplicationsService } from 'src/applications/applications.service';
+import { UserService } from 'src/user/user.service';
 import Permission from 'src/permissions/entities/permission.entity';
 import Application from 'src/applications/entities/application.entity';
+import User from 'src/user/entities/user.entity';
 @Injectable()
 export class RolesService {
   constructor(
@@ -15,13 +17,16 @@ export class RolesService {
     private readonly permissionsService: PermissionsService,
     @Inject(forwardRef(() => ApplicationsService))
     private applicationsService: ApplicationsService,
+    @Inject(forwardRef(() => UserService))
+    private userService: UserService,
   ) {}
 
   async getSubmitDto(data: CreateRoleDto | UpdateRoleDto) {
-    const { permissionIds = [], appIds = [], ...reset } = data;
+    const { permissionIds = [], appIds = [], userIds = [], ...reset } = data;
 
     let applications: Application[] = [];
     let permissions: Permission[] = [];
+    let users: User[] = [];
 
     if (permissionIds?.length > 0) {
       permissions = await this.permissionsService.findByIds(permissionIds);
@@ -31,10 +36,15 @@ export class RolesService {
       applications = await this.applicationsService.findByIds(appIds);
     }
 
+    if (userIds?.length > 0) {
+      users = await this.userService.findByIds(userIds);
+    }
+
     const param = {
       ...reset,
       permissions,
       applications,
+      users,
     };
     return param;
   }

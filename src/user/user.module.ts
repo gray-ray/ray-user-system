@@ -4,6 +4,7 @@ import { UserController } from './user.controller';
 
 import User from './entities/user.entity';
 import { ApplicationsModule } from 'src/applications/applications.module';
+import { RolesModule } from 'src/roles/roles.module';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
 
@@ -11,6 +12,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   imports: [
     TypeOrmModule.forFeature([User]),
     forwardRef(() => ApplicationsModule),
+    forwardRef(() => RolesModule),
   ],
   controllers: [UserController],
   providers: [UserService],

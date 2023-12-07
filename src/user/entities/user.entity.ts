@@ -8,6 +8,7 @@ import {
   JoinTable,
 } from 'typeorm';
 import Application from 'src/applications/entities/application.entity';
+import Role from 'src/roles/entities/role.entity';
 import { UserResponse } from '../dto/user.dto';
 
 @Entity('users')
@@ -40,8 +41,17 @@ export default class User {
   })
   apps: Application[];
 
+  @Exclude()
+  @ManyToMany(() => Role, (role) => role?.users)
+  @JoinTable({
+    name: 'user_role_map',
+    joinColumn: { name: 'user_id' },
+    inverseJoinColumn: { name: 'role_id' },
+  })
+  roles: Role[];
+
   responseObject(): UserResponse {
-    const { apps = [], ...reset } = this;
+    const { apps = [], roles = [], ...reset } = this;
 
     const res: UserResponse = {
       ...reset,

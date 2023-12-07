@@ -9,9 +9,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In } from 'typeorm';
 import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
 
+import Role from 'src/roles/entities/role.entity';
 import User from './entities/user.entity';
 import Application from 'src/applications/entities/application.entity';
 
+import { RolesService } from 'src/roles/roles.service';
 import { ApplicationsService } from 'src/applications/applications.service';
 
 @Injectable()
@@ -20,10 +22,19 @@ export class UserService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private readonly applicationsService: ApplicationsService,
+    @Inject(forwardRef(() => RolesService))
+    private readonly rolesService: RolesService,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const { username, password, email, display_name } = createUserDto;
+    const {
+      username,
+      password,
+      email,
+      display_name,
+      roleIds = [],
+      appIds = [],
+    } = createUserDto;
     const existUser = await this.userRepository.findOne({
       where: { username },
     });
@@ -33,12 +44,18 @@ export class UserService {
     }
 
     let apps: Application[];
-    if (createUserDto?.appIds && createUserDto?.appIds?.length > 0) {
-      apps = await this.applicationsService.findByIds(createUserDto?.appIds);
+    if (appIds?.length > 0) {
+      apps = await this.applicationsService.findByIds(appIds);
+    }
+
+    let roles: Role[];
+    if (roleIds?.length > 0) {
+      roles = await this.rolesService.findByIds(roleIds);
     }
 
     const param = {
       apps,
+      roles,
       password,
       email,
       display_name,

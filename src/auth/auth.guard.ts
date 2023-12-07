@@ -3,12 +3,15 @@ import {
   ExecutionContext,
   Injectable,
   UnauthorizedException,
+  SetMetadata,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { jwtConstants } from './constants';
-import { IS_PUBLIC_KEY } from './public.decorator';
+
+export const IS_PUBLIC_KEY = 'isPublic';
+export const Public = (val = true) => SetMetadata(IS_PUBLIC_KEY, val);
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -22,6 +25,8 @@ export class AuthGuard implements CanActivate {
       context.getHandler(),
       context.getClass(),
     ]);
+
+    //  isPublic == true  判断是否跳过认证
     if (isPublic) {
       // 💡 See this condition
       return true;

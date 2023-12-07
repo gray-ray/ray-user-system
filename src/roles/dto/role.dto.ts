@@ -1,6 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { PartialType } from '@nestjs/mapped-types';
-import { IsNotEmpty, IsNumber, IsOptional, IsArray , MaxLength} from 'class-validator';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsArray,
+  MaxLength,
+} from 'class-validator';
 
 export class CreateRoleDto {
   @ApiProperty()
@@ -14,13 +20,18 @@ export class CreateRoleDto {
 
   @ApiProperty()
   @IsOptional()
-  @IsArray({each: true})
+  @IsArray({ each: true })
   permissionIds: number[];
 
   @ApiProperty()
   @IsOptional()
-  @IsArray({each: true})
+  @IsArray({ each: true })
   appIds: number[];
+
+  @ApiProperty()
+  @IsOptional()
+  @IsArray({ each: true })
+  userIds: number[];
 }
 
 export class SearchRoleDto extends PartialType(CreateRoleDto) {

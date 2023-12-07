@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, UpdateUserDto, SearchUserDto } from './dto/user.dto';
 
-import { IsNotEmpty} from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
 
 @Controller('user')
 export class UserController {

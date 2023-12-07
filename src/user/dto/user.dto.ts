@@ -1,6 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { PartialType } from '@nestjs/mapped-types';
-import { IsNotEmpty, IsNumber, IsOptional,IsArray , IsEmail} from 'class-validator';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsArray,
+  IsEmail,
+} from 'class-validator';
 
 export class CreateUserDto {
   @ApiProperty()
@@ -17,12 +23,15 @@ export class CreateUserDto {
   email: string;
 
   @ApiProperty()
+  roleIds: number[];
+
+  @ApiProperty()
   @IsNotEmpty()
   display_name: string;
 
   @ApiProperty()
   @IsOptional()
-  @IsArray({each: true})
+  @IsArray({ each: true })
   appIds: number[];
 }
 
@@ -38,7 +47,7 @@ export class CreateUserDto {
 //   pageSize: number;
 // }
 
-export class SearchUserDto  {
+export class SearchUserDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
