@@ -30,7 +30,6 @@ export class ApplicationsService {
 
   async getSubmitDto(data: CreateApplicationDto | UpdateApplicationDto) {
     const { userIds = [], roleIds = [], ...reset } = data;
-
     let users: User[] = [];
     let roles: Role[] = [];
 

@@ -71,5 +71,6 @@ export class UserResponse {
   username: string;
   email: string;
   display_name: string;
-  appIds: number[];
+  appIds?: number[];
+  roleIds?: number[];
 }

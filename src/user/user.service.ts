@@ -68,6 +68,7 @@ export class UserService {
   async list() {
     const qb = this.userRepository.createQueryBuilder('users');
     qb.leftJoinAndSelect('users.apps', 'apps');
+    qb.leftJoinAndSelect('users.roles', 'roles');
     const result = await qb.getMany();
     const list = result.map((item) => item.responseObject());
     return list;
@@ -77,7 +78,7 @@ export class UserService {
     const { pageSize = 10, pageIndex = 1 } = body ?? {};
     const qb = this.userRepository.createQueryBuilder('users');
     qb.leftJoinAndSelect('users.apps', 'apps');
-
+    qb.leftJoinAndSelect('users.roles', 'roles');
     qb.skip(pageSize * (pageIndex - 1)).take(pageSize);
 
     const total = await qb.getCount();
@@ -146,8 +147,10 @@ export class UserService {
       .createQueryBuilder('users')
       // password 返回返回column隐藏时可以通过 addSelect  添加查询
       .addSelect('users.password')
+      .leftJoinAndSelect('users.roles', 'roles')
       .where('users.username = :username', { username })
       .getOne();
+
     return user;
   }
 }

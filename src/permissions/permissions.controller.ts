@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query, UseGuards } from '@nestjs/common';
 import { PermissionsService } from './permissions.service';
 import {
   CreatePermissionDto,
@@ -6,12 +6,14 @@ import {
   SearchPermissionDto,
 } from './dto/permission';
 
-
+import { RolesGuard, Roles } from 'src/auth/roles.guard';
 import { IsNotEmpty} from 'class-validator';
 @Controller('permission')
 export class PermissionsController {
   constructor(private readonly permissionsService: PermissionsService) {}
 
+  @Roles('root')
+  @UseGuards(RolesGuard)
   @Post('create')
   create(@Body() createPermissionDto: CreatePermissionDto) {
     return this.permissionsService.create(createPermissionDto);
@@ -27,6 +29,8 @@ export class PermissionsController {
     return this.permissionsService.getPage(body);
   }
 
+  @Roles('root')
+  @UseGuards(RolesGuard)
   @Post('update')
   update(@Body() updatePermissionDto: UpdatePermissionDto) {
     return this.permissionsService.update(updatePermissionDto);
@@ -39,6 +43,8 @@ export class PermissionsController {
     return this.permissionsService.findOne(+id);
   }
 
+  @Roles('root')
+  @UseGuards(RolesGuard)
   @Get('remove')
   @IsNotEmpty()
   remove(@Query('id') id: string) {

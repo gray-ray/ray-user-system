@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query, UseGuards } from '@nestjs/common';
 import { ApplicationsService } from './applications.service';
 
 import {
@@ -6,13 +6,15 @@ import {
   UpdateApplicationDto,
   SearchApplicationDto,
 } from './dto/application.dto';
-
+import { RolesGuard, Roles } from 'src/auth/roles.guard';
 import { IsNotEmpty} from 'class-validator';
 
 @Controller('application')
 export class ApplicationsController {
   constructor(private readonly applicationsService: ApplicationsService) {}
 
+  @Roles('root')
+  @UseGuards(RolesGuard)
   @Post('create')
   create(@Body() createUserDto: CreateApplicationDto) {
     return this.applicationsService.create(createUserDto);
@@ -28,6 +30,8 @@ export class ApplicationsController {
     return this.applicationsService.getPage(body);
   }
 
+  @Roles('root')
+  @UseGuards(RolesGuard)
   @Post('update')
   update(@Body() updateUserDto: UpdateApplicationDto) {
     return this.applicationsService.update(updateUserDto);
@@ -39,6 +43,8 @@ export class ApplicationsController {
     return this.applicationsService.findOne(+id);
   }
 
+  @Roles('root')
+  @UseGuards(RolesGuard)
   @Get('remove')
   @IsNotEmpty()
   remove(@Query('id') id: string) {

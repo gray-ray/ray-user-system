@@ -56,10 +56,16 @@ export default class User {
     const res: UserResponse = {
       ...reset,
       appIds: [],
+      roleIds: [],
     };
+
 
     if (apps?.length > 0) {
       res.appIds = apps?.map((o) => o?.app_id);
+    }
+
+    if (roles?.length > 0) {
+      res.roleIds = roles?.map((o) => o?.role_id);
     }
 
     return res;

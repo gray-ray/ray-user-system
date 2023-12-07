@@ -11,6 +11,9 @@ NOTE: service  module 都需要配置
 1. main.ts
 2. app.module.ts注入
 
+### roles.guard.ts  this.reflector.get is not a function 
+个人问题 
+
 ### 待办项
 - 用户、应用、角色、权限 CRUD
 - 接入 swagger ui
