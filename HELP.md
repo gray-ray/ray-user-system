@@ -11,13 +11,13 @@ NOTE: service  module 都需要配置
 1. main.ts
 2. app.module.ts注入
 
-### roles.guard.ts  this.reflector.get is not a function 
-个人问题 
+
 
 ### 待办项
 - 用户、应用、角色、权限 CRUD
 - 接入 swagger ui
 - 全局返回过滤器 返回数据结构统一
 - 全局类验证 输入字段校验
-- 登录鉴权 (所有用户都可以登录，只能查询数据 。admin 可以修改)
-- 权限认证
+- jwt登录 
+- 角色鉴权 (root 角色拥有全部权限  其他用户只有查询权限)
+- 登录密码加密

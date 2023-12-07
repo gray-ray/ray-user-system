@@ -24,7 +24,9 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+基于 nestjs + typeorm + mysql 实现 用户管理系统
+
+
 
 ## Installation
 
