@@ -1,6 +1,12 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  HttpException,
+  Injectable,
+  UnauthorizedException,
+  HttpStatus,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from 'src/user/user.service';
+import { compareSync } from 'bcryptjs';
 
 @Injectable()
 export class AuthService {
@@ -11,7 +17,12 @@ export class AuthService {
 
   async signIn(username: string, password: string) {
     const user = await this.userService.findByName(username);
-    if (user?.password !== password) {
+
+    if (!user) {
+      throw new HttpException('用户不存在', HttpStatus.BAD_REQUEST);
+    }
+
+    if (!compareSync(password, user.password)) {
       throw new UnauthorizedException();
     }
 

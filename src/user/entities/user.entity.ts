@@ -6,7 +6,9 @@ import {
   PrimaryGeneratedColumn,
   ManyToMany,
   JoinTable,
+  BeforeInsert,
 } from 'typeorm';
+import * as bcrypt from 'bcryptjs';
 import Application from 'src/applications/entities/application.entity';
 import Role from 'src/roles/entities/role.entity';
 import { UserResponse } from '../dto/user.dto';
@@ -49,6 +51,12 @@ export default class User {
     inverseJoinColumn: { name: 'role_id' },
   })
   roles: Role[];
+
+  @BeforeInsert()
+  async encryptPwd() {
+    if (!this.password) return;
+    this.password = await bcrypt.hashSync(this.password, 10);
+  }
 
   responseObject(): UserResponse {
     const { apps = [], roles = [], ...reset } = this;

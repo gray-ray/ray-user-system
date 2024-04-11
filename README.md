@@ -24,7 +24,7 @@
 
 ## Description
 
-基于 nestjs + typeorm + mysql 实现 用户管理系统
+基于 nestjs + typeorm + mysql 实现 用户管理应用
 
 
 
