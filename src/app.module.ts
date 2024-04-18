@@ -25,7 +25,7 @@ import { AuthModule } from './auth/auth.module';
         return {
           type: 'mysql',
           host: 'localhost',
-          database: 'user_system',
+          database: 'ray_users',
           port: 3306,
           username: 'root',
           password: 'root123456',
